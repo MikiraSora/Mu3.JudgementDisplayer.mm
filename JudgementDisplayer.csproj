@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>net35</TargetFrameworks>
+		<OutputType>Library</OutputType>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<RootNamespace>DpPatches.JudgementDisplayer</RootNamespace>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<DebugType>embedded</DebugType>
+		<LangVersion>preview</LangVersion>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<OutputPath>..\..\..\act3dev\package\BepInEx\monomod</OutputPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Reference Include="AMDaemon.NET">
+			<HintPath>..\..\..\act3dev\package\mu3_Data\Managed\AMDaemon.NET.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="Assembly-CSharp">
+			<HintPath>..\..\..\act3dev\package\mu3_Data\Managed\Assembly-CSharp.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="MonoMod">
+			<HintPath>..\..\..\act3dev\package\BepInEx\core\MonoMod.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="mscorlib">
+			<HintPath>..\..\..\act3dev\package\mu3_Data\Managed\mscorlib.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Update="System">
+			<HintPath>..\..\..\act3dev\package\mu3_Data\Managed\System.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="UnityEngine">
+			<HintPath>..\..\..\act3dev\package\mu3_Data\Managed\UnityEngine.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+	</ItemGroup>
+	<PropertyGroup>
+	  <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+	</PropertyGroup>
+</Project>
