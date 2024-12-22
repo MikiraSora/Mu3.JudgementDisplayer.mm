@@ -14,6 +14,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="ImGui.Net\**" />
+	  <EmbeddedResource Remove="ImGui.Net\**" />
+	  <None Remove="ImGui.Net\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Reference Include="AMDaemon.NET">
 			<HintPath>..\..\..\act3dev\package\mu3_Data\Managed\AMDaemon.NET.dll</HintPath>
 			<Private>False</Private>
