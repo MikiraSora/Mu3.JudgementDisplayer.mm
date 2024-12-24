@@ -1,0 +1,3 @@
+[submodule "UnityImGUI"]
+	path = UnityImGUI
+	url = https://github.com/MikiraSora/UnityImGUI
