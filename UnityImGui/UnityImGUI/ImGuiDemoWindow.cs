@@ -4,6 +4,9 @@ using ImPlotNET;
 
 public class ImGuiDemoWindow : MonoBehaviour
 {
+    private bool showImGuiDemoWindow;
+    private bool showImPlotDemoWindow;
+
     public void Awake()
     {
         Cursor.visible = true;
@@ -11,14 +14,7 @@ public class ImGuiDemoWindow : MonoBehaviour
 
     public void Update()
     {
-        var b = true;
-        ImGui.ShowDemoWindow(ref b);
-        ImPlot.ShowDemoWindow(ref b);
-
-        if (ImGui.Begin("Hello, unity5.x and dear Imgui", ImGuiWindowFlags.NoDecoration | ImGuiWindowFlags.NoDocking | ImGuiWindowFlags.NoTitleBar))
-        {
-            ImGui.Text($"This is text: {Random.Range(0, 10000)}");
-            ImGui.End();
-        }
+        ImGui.ShowDemoWindow(ref showImGuiDemoWindow);
+        ImPlot.ShowDemoWindow(ref showImPlotDemoWindow);
     }
 }

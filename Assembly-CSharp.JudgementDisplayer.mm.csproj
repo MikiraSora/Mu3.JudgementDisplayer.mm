@@ -1,51 +1,539 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFrameworks>net35</TargetFrameworks>
-		<OutputType>Library</OutputType>
-		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<RootNamespace>DpPatches.JudgementDisplayer</RootNamespace>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<DebugType>embedded</DebugType>
-		<LangVersion>preview</LangVersion>
-	</PropertyGroup>
-
-	<PropertyGroup>
-		<OutputPath>..\..\..\act3dev\package\BepInEx\monomod</OutputPath>
-	</PropertyGroup>
-
-	<ItemGroup>
-	  <Compile Remove="ImGui.Net\**" />
-	  <EmbeddedResource Remove="ImGui.Net\**" />
-	  <None Remove="ImGui.Net\**" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Reference Include="AMDaemon.NET">
-			<HintPath>..\..\..\act3dev\package\mu3_Data\Managed\AMDaemon.NET.dll</HintPath>
-			<Private>False</Private>
-		</Reference>
-		<Reference Include="Assembly-CSharp">
-			<HintPath>..\..\..\act3dev\package\mu3_Data\Managed\Assembly-CSharp.dll</HintPath>
-			<Private>False</Private>
-		</Reference>
-		<Reference Include="MonoMod">
-			<HintPath>..\..\..\act3dev\package\BepInEx\core\MonoMod.dll</HintPath>
-			<Private>False</Private>
-		</Reference>
-		<Reference Include="mscorlib">
-			<HintPath>..\..\..\act3dev\package\mu3_Data\Managed\mscorlib.dll</HintPath>
-			<Private>False</Private>
-		</Reference>
-		<Reference Update="System">
-			<HintPath>..\..\..\act3dev\package\mu3_Data\Managed\System.dll</HintPath>
-			<Private>False</Private>
-		</Reference>
-		<Reference Include="UnityEngine">
-			<HintPath>..\..\..\act3dev\package\mu3_Data\Managed\UnityEngine.dll</HintPath>
-			<Private>False</Private>
-		</Reference>
-	</ItemGroup>
-	<PropertyGroup>
-	  <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-	</PropertyGroup>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ProjectGuid>{3C658384-B0F1-42ED-B5B8-078DC342FC83}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <LangVersion>preview</LangVersion>
+    <RootNamespace>DpPatches.JudgementDisplayer</RootNamespace>
+    <AssemblyName>Assembly-CSharp.JudgementDisplayer.mm</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>F:\act3dev\package\BepInEx\monomod\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Bases\ImGuiColor.cs" />
+    <Compile Include="Bases\JudgementChecker.cs" />
+    <Compile Include="Bases\JudgementItem.cs" />
+    <Compile Include="Bases\JudgementItemCollection.cs" />
+    <Compile Include="Bases\JudgementRecordItem.cs" />
+    <Compile Include="Bases\JudgeResult.cs" />
+    <Compile Include="ExceptionDumpper.cs" />
+    <Compile Include="Formatter.cs" />
+    <Compile Include="Managers\PlayingManager.cs" />
+    <Compile Include="Patches\MU3\Notes\NotesManagerEx.cs" />
+    <Compile Include="Patches\MU3\Scene_37_Result_ScoreEx.cs" />
+    <Compile Include="Patches\MU3\Sequence\PlayMusicEx.cs" />
+    <Compile Include="Patches\MU3\SystemUIEx.cs" />
+    <Compile Include="Patches\MU3\Util\ModeEx.cs" />
+    <Compile Include="Patches\RD1\SSS\StateMachineEx.cs" />
+    <Compile Include="PatchLog.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Setting.cs" />
+    <Compile Include="UI\CommonWindowBase.cs" />
+    <Compile Include="UI\IWindow.cs" />
+    <Compile Include="UI\WindowManager.cs" />
+    <Compile Include="UI\WindowManagerMonoBehavior.cs" />
+    <Compile Include="UI\Windows\PlaytimeJudgementDisplayerWindow.cs" />
+    <Compile Include="UI\Windows\ResultJudgementDisplayerTypeBWindow.cs" />
+    <Compile Include="UI\Windows\ResultJudgementDisplayerTypeAWindow.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Delegates.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\FXCompatible\System\Mathf.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\FXCompatible\System\Numerics\Vector2.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\FXCompatible\System\Numerics\Vector3.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\FXCompatible\System\Numerics\Vector4.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\FXCompatible\System\Runtime\CompilerServices\Unsafe.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\FXCompatible\System\Text\EncodingEx.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImColor.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImDrawChannel.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImDrawCmd.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImDrawCmdHeader.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImDrawData.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImDrawFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImDrawList.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImDrawListFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImDrawListSplitter.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImDrawVert.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImFont.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImFontAtlas.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImFontAtlasCustomRect.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImFontAtlasFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImFontConfig.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImFontGlyph.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImFontGlyphRangesBuilder.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGui.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiBackendFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiButtonFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiChildFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiCol.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiColorEditFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiComboFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiCond.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiConfigFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiDataType.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiDir.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiDockNodeFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiDragDropFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiFocusedFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiHoveredFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiInputFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiInputTextCallbackData.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiInputTextFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiIO.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiItemFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiKey.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiKeyData.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiListClipper.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiMouseButton.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiMouseCursor.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiMouseSource.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiMultiSelectFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiMultiSelectIO.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiNative.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiOnceUponAFrame.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiPayload.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiPlatformImeData.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiPlatformIO.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiPlatformMonitor.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiPopupFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiSelectableFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiSelectionBasicStorage.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiSelectionExternalStorage.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiSelectionRequest.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiSelectionRequestType.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiSizeCallbackData.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiSliderFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiSortDirection.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiStorage.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiStyle.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiStyleVar.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiTabBarFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiTabItemFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiTableBgTarget.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiTableColumnFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiTableColumnSortSpecs.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiTableFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiTableRowFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiTableSortSpecs.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiTextBuffer.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiTextFilter.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiTextRange.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiTreeNodeFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiViewport.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiViewportFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiWindowClass.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\ImGuiWindowFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\StbTexteditRow.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\StbUndoRecord.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\StbUndoState.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Generated\STB_TexteditState.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\ImGui.Manual.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\ImGui.Manual.ReadOnlySpan.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\ImGuiModFlags.Manual.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\ImGuiNative.Manual.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\ImGuiSizeCallback.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\ImGuiTextEditCallback.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\ImVector.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\NullTerminatedString.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Pair.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\RangeAccessor.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGui.Net\Util.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGuiController.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGuiConversions.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGuiDemoWindow.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGuiInput.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImGuiPluginHook.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImAxis.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlot.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotAxisFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotBarGroupsFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotBarsFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotBin.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotCol.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotColormap.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotColormapScaleFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotCond.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotDigitalFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotDragToolFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotDummyFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotErrorBarsFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotHeatmapFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotHistogramFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotImageFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotInfLinesFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotInputMap.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotItemFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotLegendFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotLineFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotLocation.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotMarker.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotMouseTextFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotNative.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotPieChartFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotPoint.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotRange.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotRect.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotScale.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotScatterFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotShadedFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotStairsFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotStemsFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotStyle.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotStyleVar.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotSubplotFlags.gen.cs" />
+    <Compile Include="UnityImGUI\UnityImGUI\ImPlot.NET\Generated\ImPlotTextFlags.gen.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UnityImGUI\LICENSE.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\backend_test\example_glfw_dx11\CMakeLists.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\backend_test\example_glfw_opengl3\CMakeLists.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\backend_test\example_sdl_opengl3\CMakeLists.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\backend_test\example_sdl_vulkan\CMakeLists.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\CMakeLists.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\generator\output\definitions.json" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\generator\output\impl_definitions.json" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\generator\output\overloads.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\generator\output\structs_and_enums.json" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\generator\output\typedefs_dict.json" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\docs\CHANGELOG.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\docs\TODO.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_android_opengl3\android\app\src\main\AndroidManifest.xml" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_android_opengl3\CMakeLists.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_vulkan\CMakeLists.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_wgpu\CMakeLists.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_wgpu\web\index.html" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\examples\libs\emscripten\shell_minimal.html" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\examples\libs\glfw\COPYING.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\examples\libs\usynergy\README.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\examples\README.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\LICENSE.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\misc\cpp\README.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\misc\debuggers\README.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\misc\fonts\Cousine-Regular.ttf" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\misc\fonts\DroidSans.ttf" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\misc\fonts\Karla-Regular.ttf" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\misc\fonts\ProggyClean.ttf" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\misc\fonts\ProggyTiny.ttf" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\misc\fonts\Roboto-Medium.ttf" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\imgui\misc\README.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\test\CMakeLists.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimgui\TODO.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimplot\CMakeLists.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimplot\example_glfw_opengl3\CMakeLists.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimplot\generator\output\definitions.json" />
+    <Content Include="UnityImGUI\PluginSource\cimplot\generator\output\overloads.txt" />
+    <Content Include="UnityImGUI\PluginSource\cimplot\generator\output\structs_and_enums.json" />
+    <Content Include="UnityImGUI\PluginSource\cimplot\generator\output\typedefs_dict.json" />
+    <Content Include="UnityImGUI\PluginSource\cimplot\implot\.github\CMakeLists.txt" />
+    <Content Include="UnityImGUI\PluginSource\source\gl3w\readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="UnityImGUI\.gitignore" />
+    <None Include="UnityImGUI\.gitmodules" />
+    <None Include="UnityImGUI\PluginSource\cimgui\.github\workflows\build.yml" />
+    <None Include="UnityImGUI\PluginSource\cimgui\.gitignore" />
+    <None Include="UnityImGUI\PluginSource\cimgui\.gitmodules" />
+    <None Include="UnityImGUI\PluginSource\cimgui\.travis.yml" />
+    <None Include="UnityImGUI\PluginSource\cimgui\backend_test\example_glfw_dx11\main.c" />
+    <None Include="UnityImGUI\PluginSource\cimgui\backend_test\example_glfw_dx11\README.md" />
+    <None Include="UnityImGUI\PluginSource\cimgui\backend_test\example_glfw_opengl3\main.c" />
+    <None Include="UnityImGUI\PluginSource\cimgui\backend_test\example_glfw_opengl3\README.md" />
+    <None Include="UnityImGUI\PluginSource\cimgui\backend_test\example_sdl_opengl3\main.c" />
+    <None Include="UnityImGUI\PluginSource\cimgui\backend_test\example_sdl_vulkan\main.c" />
+    <None Include="UnityImGUI\PluginSource\cimgui\cimgui.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\cimgui.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\generator\cimgui_template.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\generator\cimgui_template.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\generator\config_generator.lua" />
+    <None Include="UnityImGUI\PluginSource\cimgui\generator\cpp2ffi.lua" />
+    <None Include="UnityImGUI\PluginSource\cimgui\generator\generator.bat" />
+    <None Include="UnityImGUI\PluginSource\cimgui\generator\generator.lua" />
+    <None Include="UnityImGUI\PluginSource\cimgui\generator\generator.sh" />
+    <None Include="UnityImGUI\PluginSource\cimgui\generator\json.lua" />
+    <None Include="UnityImGUI\PluginSource\cimgui\generator\output\cimgui_impl.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\generator\output\definitions.lua" />
+    <None Include="UnityImGUI\PluginSource\cimgui\generator\output\impl_definitions.lua" />
+    <None Include="UnityImGUI\PluginSource\cimgui\generator\output\structs_and_enums.lua" />
+    <None Include="UnityImGUI\PluginSource\cimgui\generator\output\typedefs_dict.lua" />
+    <None Include="UnityImGUI\PluginSource\cimgui\generator\print_defines.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\.editorconfig" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\.gitattributes" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\.github\FUNDING.yml" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\.github\ISSUE_TEMPLATE\config.yml" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\.github\ISSUE_TEMPLATE\issue_template.yml" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\.github\pull_request_template.md" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\.github\workflows\build.yml" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\.github\workflows\scheduled.yml" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\.github\workflows\static-analysis.yml" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\.gitignore" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_allegro5.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_allegro5.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_android.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_android.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_dx10.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_dx10.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_dx11.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_dx11.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_dx12.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_dx12.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_dx9.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_dx9.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_glfw.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_glfw.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_glut.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_glut.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_metal.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_metal.mm" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_opengl2.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_opengl2.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_opengl3.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_opengl3.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_opengl3_loader.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_osx.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_osx.mm" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_sdl2.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_sdl2.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_sdl3.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_sdl3.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_sdlrenderer2.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_sdlrenderer2.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_sdlrenderer3.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_sdlrenderer3.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_vulkan.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_vulkan.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_wgpu.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_wgpu.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_win32.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\imgui_impl_win32.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\vulkan\generate_spv.sh" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\vulkan\glsl_shader.frag" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\backends\vulkan\glsl_shader.vert" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\docs\BACKENDS.md" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\docs\CONTRIBUTING.md" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\docs\EXAMPLES.md" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\docs\FAQ.md" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\docs\FONTS.md" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\docs\README.md" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_allegro5\example_allegro5.vcxproj" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_allegro5\example_allegro5.vcxproj.filters" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_allegro5\imconfig_allegro5.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_allegro5\main.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_allegro5\README.md" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_android_opengl3\android\.gitignore" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_android_opengl3\android\app\build.gradle" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_android_opengl3\android\app\src\main\java\MainActivity.kt" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_android_opengl3\android\build.gradle" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_android_opengl3\android\settings.gradle" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_android_opengl3\main.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_apple_metal\example_apple_metal.xcodeproj\project.pbxproj" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_apple_metal\iOS\Info-iOS.plist" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_apple_metal\iOS\LaunchScreen.storyboard" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_apple_metal\macOS\Info-macOS.plist" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_apple_metal\macOS\MainMenu.storyboard" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_apple_metal\main.mm" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_apple_metal\README.md" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_apple_opengl2\example_apple_opengl2.xcodeproj\project.pbxproj" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_apple_opengl2\main.mm" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_metal\main.mm" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_metal\Makefile" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_opengl2\build_win32.bat" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_opengl2\example_glfw_opengl2.vcxproj" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_opengl2\example_glfw_opengl2.vcxproj.filters" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_opengl2\main.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_opengl2\Makefile" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_opengl3\build_win32.bat" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_opengl3\example_glfw_opengl3.vcxproj" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_opengl3\example_glfw_opengl3.vcxproj.filters" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_opengl3\main.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_opengl3\Makefile" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_opengl3\Makefile.emscripten" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_vulkan\build_win32.bat" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_vulkan\build_win64.bat" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_vulkan\example_glfw_vulkan.vcxproj" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_vulkan\example_glfw_vulkan.vcxproj.filters" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_vulkan\main.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_wgpu\main.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_wgpu\Makefile.emscripten" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glfw_wgpu\README.md" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glut_opengl2\example_glut_opengl2.vcxproj" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glut_opengl2\example_glut_opengl2.vcxproj.filters" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glut_opengl2\main.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_glut_opengl2\Makefile" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_null\build_win32.bat" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_null\main.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_null\Makefile" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_directx11\build_win32.bat" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_directx11\example_sdl2_directx11.vcxproj" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_directx11\example_sdl2_directx11.vcxproj.filters" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_directx11\main.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_metal\main.mm" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_metal\Makefile" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_opengl2\build_win32.bat" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_opengl2\example_sdl2_opengl2.vcxproj" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_opengl2\example_sdl2_opengl2.vcxproj.filters" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_opengl2\main.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_opengl2\Makefile" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_opengl2\README.md" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_opengl3\build_win32.bat" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_opengl3\example_sdl2_opengl3.vcxproj" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_opengl3\example_sdl2_opengl3.vcxproj.filters" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_opengl3\main.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_opengl3\Makefile" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_opengl3\Makefile.emscripten" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_opengl3\README.md" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_sdlrenderer2\build_win32.bat" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_sdlrenderer2\example_sdl2_sdlrenderer2.vcxproj" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_sdlrenderer2\example_sdl2_sdlrenderer2.vcxproj.filters" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_sdlrenderer2\main.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_sdlrenderer2\Makefile" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_sdlrenderer2\README.md" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_vulkan\build_win32.bat" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_vulkan\example_sdl2_vulkan.vcxproj" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_vulkan\example_sdl2_vulkan.vcxproj.filters" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl2_vulkan\main.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl3_opengl3\build_win32.bat" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl3_opengl3\example_sdl3_opengl3.vcxproj" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl3_opengl3\example_sdl3_opengl3.vcxproj.filters" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl3_opengl3\main.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl3_opengl3\Makefile" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl3_opengl3\Makefile.emscripten" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl3_opengl3\README.md" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl3_sdlrenderer3\build_win32.bat" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl3_sdlrenderer3\example_sdl3_sdlrenderer3.vcxproj" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl3_sdlrenderer3\example_sdl3_sdlrenderer3.vcxproj.filters" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl3_sdlrenderer3\main.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_sdl3_sdlrenderer3\Makefile" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_win32_directx10\build_win32.bat" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_win32_directx10\example_win32_directx10.vcxproj" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_win32_directx10\example_win32_directx10.vcxproj.filters" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_win32_directx10\main.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_win32_directx11\build_win32.bat" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_win32_directx11\example_win32_directx11.vcxproj" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_win32_directx11\example_win32_directx11.vcxproj.filters" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_win32_directx11\main.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_win32_directx12\build_win32.bat" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_win32_directx12\example_win32_directx12.vcxproj" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_win32_directx12\example_win32_directx12.vcxproj.filters" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_win32_directx12\main.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_win32_directx9\build_win32.bat" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_win32_directx9\example_win32_directx9.vcxproj" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_win32_directx9\example_win32_directx9.vcxproj.filters" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_win32_directx9\main.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_win32_opengl3\build_win32.bat" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_win32_opengl3\example_win32_opengl3.vcxproj" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_win32_opengl3\example_win32_opengl3.vcxproj.filters" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\example_win32_opengl3\main.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\imgui_examples.sln" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\libs\emscripten\emscripten_mainloop_stub.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\libs\glfw\include\GLFW\glfw3.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\libs\glfw\include\GLFW\glfw3native.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\libs\glfw\lib-vc2010-32\glfw3.lib" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\libs\glfw\lib-vc2010-64\glfw3.lib" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\libs\usynergy\uSynergy.c" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\examples\libs\usynergy\uSynergy.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\imconfig.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\imgui.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\imgui.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\imgui_demo.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\imgui_draw.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\imgui_internal.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\imgui_tables.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\imgui_widgets.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\imstb_rectpack.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\imstb_textedit.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\imstb_truetype.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\misc\cpp\imgui_stdlib.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\misc\cpp\imgui_stdlib.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\misc\debuggers\imgui.gdb" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\misc\debuggers\imgui.natstepfilter" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\misc\debuggers\imgui.natvis" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\misc\fonts\binary_to_compressed_c.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\misc\freetype\imgui_freetype.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\misc\freetype\imgui_freetype.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\misc\freetype\README.md" />
+    <None Include="UnityImGUI\PluginSource\cimgui\imgui\misc\single_file\imgui_single_file.h" />
+    <None Include="UnityImGUI\PluginSource\cimgui\LICENSE" />
+    <None Include="UnityImGUI\PluginSource\cimgui\Makefile" />
+    <None Include="UnityImGUI\PluginSource\cimgui\README.md" />
+    <None Include="UnityImGUI\PluginSource\cimgui\test\main.c" />
+    <None Include="UnityImGUI\PluginSource\cimplot\.gitmodules" />
+    <None Include="UnityImGUI\PluginSource\cimplot\cimplot.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimplot\cimplot.h" />
+    <None Include="UnityImGUI\PluginSource\cimplot\example_glfw_opengl3\main.c" />
+    <None Include="UnityImGUI\PluginSource\cimplot\example_glfw_opengl3\README.md" />
+    <None Include="UnityImGUI\PluginSource\cimplot\generator\cimplot_template.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimplot\generator\cimplot_template.h" />
+    <None Include="UnityImGUI\PluginSource\cimplot\generator\generator.bat" />
+    <None Include="UnityImGUI\PluginSource\cimplot\generator\generator.lua" />
+    <None Include="UnityImGUI\PluginSource\cimplot\generator\generator.sh" />
+    <None Include="UnityImGUI\PluginSource\cimplot\generator\output\definitions.lua" />
+    <None Include="UnityImGUI\PluginSource\cimplot\generator\output\structs_and_enums.lua" />
+    <None Include="UnityImGUI\PluginSource\cimplot\generator\output\typedefs_dict.lua" />
+    <None Include="UnityImGUI\PluginSource\cimplot\implot\.github\example_implot.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimplot\implot\.github\workflows\build.yml" />
+    <None Include="UnityImGUI\PluginSource\cimplot\implot\implot.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimplot\implot\implot.h" />
+    <None Include="UnityImGUI\PluginSource\cimplot\implot\implot_demo.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimplot\implot\implot_internal.h" />
+    <None Include="UnityImGUI\PluginSource\cimplot\implot\implot_items.cpp" />
+    <None Include="UnityImGUI\PluginSource\cimplot\implot\LICENSE" />
+    <None Include="UnityImGUI\PluginSource\cimplot\implot\README.md" />
+    <None Include="UnityImGUI\PluginSource\cimplot\implot\TODO.md" />
+    <None Include="UnityImGUI\PluginSource\cimplot\LICENSE" />
+    <None Include="UnityImGUI\PluginSource\cimplot\README.md" />
+    <None Include="UnityImGUI\PluginSource\source\gl3w\gl3w.c" />
+    <None Include="UnityImGUI\PluginSource\source\gl3w\gl3w.h" />
+    <None Include="UnityImGUI\PluginSource\source\gl3w\glcorearb.h" />
+    <None Include="UnityImGUI\PluginSource\source\ImGuiShader.h" />
+    <None Include="UnityImGUI\PluginSource\source\lib\d3dcompiler.lib" />
+    <None Include="UnityImGUI\PluginSource\source\PlatformBase.h" />
+    <None Include="UnityImGUI\PluginSource\source\premake5.lua" />
+    <None Include="UnityImGUI\PluginSource\source\RenderAPI.cpp" />
+    <None Include="UnityImGUI\PluginSource\source\RenderAPI.h" />
+    <None Include="UnityImGUI\PluginSource\source\RenderAPI_D3D11.cpp" />
+    <None Include="UnityImGUI\PluginSource\source\RenderAPI_D3D12.cpp" />
+    <None Include="UnityImGUI\PluginSource\source\RenderAPI_Metal.mm" />
+    <None Include="UnityImGUI\PluginSource\source\RenderAPI_OpenGLCoreES.cpp" />
+    <None Include="UnityImGUI\PluginSource\source\RenderAPI_Vulkan.cpp" />
+    <None Include="UnityImGUI\PluginSource\source\RenderingPlugin.cpp" />
+    <None Include="UnityImGUI\PluginSource\source\RenderingPlugin.def" />
+    <None Include="UnityImGUI\PluginSource\source\Unity\IUnityGraphics.h" />
+    <None Include="UnityImGUI\PluginSource\source\Unity\IUnityGraphicsD3D11.h" />
+    <None Include="UnityImGUI\PluginSource\source\Unity\IUnityGraphicsD3D12.h" />
+    <None Include="UnityImGUI\PluginSource\source\Unity\IUnityGraphicsD3D9.h" />
+    <None Include="UnityImGUI\PluginSource\source\Unity\IUnityGraphicsMetal.h" />
+    <None Include="UnityImGUI\PluginSource\source\Unity\IUnityGraphicsVulkan.h" />
+    <None Include="UnityImGUI\PluginSource\source\Unity\IUnityInterface.h" />
+    <None Include="UnityImGUI\PluginSource\source\vendor\CImGui\premake5.lua" />
+    <None Include="UnityImGUI\PluginSource\xmake.lua" />
+    <None Include="UnityImGUI\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>F:\act3dev\package\mu3_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="MonoMod">
+      <HintPath>F:\act3dev\package\BepInEx\core\MonoMod.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="UnityEngine">
+      <HintPath>F:\act3dev\package\mu3_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

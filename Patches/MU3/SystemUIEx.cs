@@ -1,4 +1,6 @@
-﻿using MonoMod;
+﻿using DpPatches.JudgementDisplayer.UI;
+using DpPatches.JudgementDisplayer.UI.Windows;
+using MonoMod;
 using MU3;
 using System;
 using System.Collections.Generic;
@@ -15,10 +17,11 @@ namespace DpPatches.JudgementDisplayer.Patches.MU3
         protected void Awake()
         {
             orig_Awake();
-            PatchLog.WriteLine("GOOD");
 
             this.gameObject.AddComponent<ImGuiPluginHook>();
-            this.gameObject.AddComponent<ImGuiDemoWindow>();
+            //this.gameObject.AddComponent<ImGuiDemoWindow>();
+
+            this.gameObject.AddComponent<WindowManagerMonoBehavior>();
         }
     }
 }
